@@ -4,7 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # === Configuración inicial ===
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-credentials = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+credentials = ServiceAccountCredentials.from_json_keyfile_name("/etc/secrets/creds.json", scope)
 client = gspread.authorize(credentials)
 
 # ID del documento (sacado de la URL de tu hoja de cálculo)
@@ -12,6 +12,10 @@ spreadsheet_id = "1tFeRzZyOKojWQW8vHA3m3ssv5_OFPFAtdYXpCBeZ6qQ"
 worksheet = client.open_by_key(spreadsheet_id).sheet1
 
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Backend verificador está activo y funcionando 🔥"
 
 @app.route("/verificar", methods=["POST"])
 def verificar():
