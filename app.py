@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from flask_cors import CORS  # <-- NUEVO: Importamos la extensión
 
 # === Configuración inicial ===
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -12,6 +13,7 @@ spreadsheet_id = "1tFeRzZyOKojWQW8vHA3m3ssv5_OFPFAtdYXpCBeZ6qQ"
 worksheet = client.open_by_key(spreadsheet_id).sheet1
 
 app = Flask(__name__)
+CORS(app) # <-- NUEVO: Inicializamos CORS para permitir peticiones del frontend
 
 @app.route("/")
 def home():
